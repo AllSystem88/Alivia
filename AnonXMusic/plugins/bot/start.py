@@ -23,6 +23,21 @@ from AnonXMusic.utils.inline import help_pannel, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
 
+#--------------------------
+
+DEEP_VID = [
+"https://files.catbox.moe/5n9qbw.mp4",
+"https://files.catbox.moe/zgh9rv.mp4",
+"https://files.catbox.moe/5hsrcj.mp4",
+"https://files.catbox.moe/9nwtcm.mp4",
+"https://files.catbox.moe/zel6kq.mp4",
+"https://files.catbox.moe/x36bl7.mp4",
+"https://files.catbox.moe/wyt9n5.mp4",
+"https://files.catbox.moe/fdo5j5.mp4",
+"https://files.catbox.moe/meljwi.mp4",
+
+]
+
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
@@ -33,7 +48,7 @@ async def start_pm(client, message: Message, _):
         if name[0:4] == "help":
             keyboard = help_pannel(_)
             return await message.reply_video(
-                video=config.START_IMG_URL,
+                random.choice(DEEP_VID),
                 caption=_["help_1"].format(config.SUPPORT_CHAT),
                 reply_markup=keyboard,
             )
@@ -85,7 +100,7 @@ async def start_pm(client, message: Message, _):
     else:
         out = private_panel(_)
         await message.reply_video(
-            video=config.START_IMG_URL,
+            random.choice(DEEP_VID),
             caption=_["start_2"].format(message.from_user.mention, app.mention),
             reply_markup=InlineKeyboardMarkup(out),
         )
@@ -102,7 +117,7 @@ async def start_gp(client, message: Message, _):
     out = start_panel(_)
     uptime = int(time.time() - _boot_)
     await message.reply_video(
-        video=config.START_IMG_URL,
+        random.choice(DEEP_VID),
         caption=_["start_1"].format(app.mention, get_readable_time(uptime)),
         reply_markup=InlineKeyboardMarkup(out),
     )
@@ -136,8 +151,8 @@ async def welcome(client, message: Message):
                     return await app.leave_chat(message.chat.id)
 
                 out = start_panel(_)
-                await message.reply_photo(
-                    photo=config.START_IMG_URL,
+                await message.reply_video(
+                    random.choice(DEEP_VID),
                     caption=_["start_3"].format(
                         message.from_user.first_name,
                         app.mention,
@@ -150,3 +165,4 @@ async def welcome(client, message: Message):
                 await message.stop_propagation()
         except Exception as ex:
             print(ex)
+
